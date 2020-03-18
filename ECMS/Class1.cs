@@ -8,5 +8,6 @@ namespace ECMS
 {
     public class Class1
     {
+
     }
 }
