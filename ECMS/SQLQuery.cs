@@ -14,13 +14,14 @@ using System.IO;
 
 namespace ECMS
 {
-    class SQLQuery
+    public class SQLQuery
     {
         private int _Count;
         private string ConfigName = "DoctorDBCS";
         public void ConnectionString(string ConnectionStringName)
         {
             ConfigName = ConnectionStringName;
+            
         }
         public int BoolCount
         {

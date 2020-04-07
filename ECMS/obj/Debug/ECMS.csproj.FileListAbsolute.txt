@@ -5,6 +5,6 @@ C:\Users\Tasherul Islam\Documents\GitHub\Protfolio_Project\ECMS\ECMS\obj\Debug\E
 C:\Users\Tasherul Islam\Documents\GitHub\Protfolio_Project\ECMS\ECMS\obj\Debug\ECMS.pdb
 C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\ECMS.dll
 C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\ECMS.pdb
-C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\obj\Debug\ECMS.csprojResolveAssemblyReference.cache
 C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\obj\Debug\ECMS.dll
 C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\obj\Debug\ECMS.pdb
+C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\obj\Debug\ECMS.csprojResolveAssemblyReference.cache

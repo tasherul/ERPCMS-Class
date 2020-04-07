@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ECMS
 {
-    public class Class1
+    public class MainDB
     {
-
+        
     }
 }
