@@ -24,6 +24,11 @@ namespace ECMS
         private string MainDB_UserID = "MainDBuser";
         private string MainDB_Password = "Pi@sh885989";
         private string MainDB_DataSource = "DESKTOP-SUFDOAC";
+        
+        
+        public bool ConnectionStringEnable { private get; set; }
+        public string ConnectionString;
+
         /* ---------------------------------------------------
          * that is Default code to Main DB 
          *  --------------------------------------------------*/
@@ -48,6 +53,7 @@ namespace ECMS
             //       MainDB_DataSource,MainDB_DataBaseName,MainDB_UserID,MainDB_Password);
             try
             {
+
                 string DataSource = MainDB_DataSource;
                 string DataBaseName = MainDB_DataBaseName;
                 string UserID = MainDB_UserID;
@@ -64,12 +70,20 @@ namespace ECMS
                 }
                 SqlConnectionStringBuilder s = new SqlConnectionStringBuilder();
                 //s.Encrypt = true;
-                s.DataSource = DataSource;
-                s.InitialCatalog = DataBaseName;
-                s.UserID = UserID;
-                s.Password = Password;
-                s.IntegratedSecurity = true;
-                con = new SqlConnection(s.ConnectionString);            
+                if (ConnectionStringEnable)
+                { con = new SqlConnection(ConnectionString); }
+                else
+                {
+                    s.DataSource = DataSource;
+                    s.InitialCatalog = DataBaseName;
+                    s.UserID = UserID;
+                    s.Password = Password;
+                    s.IntegratedSecurity = true;
+                    con = new SqlConnection(s.ConnectionString);
+                }
+                
+                
+                         
                 if (con.State == ConnectionState.Closed)
                     { ErrorMessage = "Success"; __SqlConnectionStatus = true; return true; }  
                 else
@@ -106,16 +120,26 @@ namespace ECMS
             }
             SqlConnectionStringBuilder s = new SqlConnectionStringBuilder();
             // s.Encrypt = true;
-            s.DataSource = DataSource;
-            s.InitialCatalog = DataBaseName;
-            s.UserID = UserID;
-            s.Password = Password;
-            s.IntegratedSecurity = true;
-            SqlConnection cc = new SqlConnection(s.ConnectionString);
+            if (ConnectionStringEnable)
+            {
+                SqlConnection cc = new SqlConnection(ConnectionString);
+                return cc;
+            }
+            else
+            {
+                s.DataSource = DataSource;
+                s.InitialCatalog = DataBaseName;
+                s.UserID = UserID;
+                s.Password = Password;
+                s.IntegratedSecurity = true;
+                SqlConnection cc = new SqlConnection(s.ConnectionString);
+                return cc;
+            }
+            
             //----------------------------------------------------    
             //All are ok then SqlConnection is return to Excutive 
             //----------------------------------------------------          
-            return cc;            
+                      
         }
 
     }

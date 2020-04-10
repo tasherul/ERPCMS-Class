@@ -19,12 +19,14 @@ namespace ECMS
     public class Check
     {
         private int _Count;
-        private string ConfigName = "DoctorDBCS";
+        //private string ConfigName = "DoctorDBCS";
         //public void ConnectionString(string ConnectionStringName)
         //{
         //    ConfigName = ConnectionStringName;
         //}
         Connection Sql = new Connection();
+        public bool IsConnected { private get; set; }
+        public SqlConnection Conected { private get; set; }
         public int BoolCount
         {
             get { return _Count; }
@@ -32,9 +34,15 @@ namespace ECMS
         }
         private int int_Check_PV(string CommandText)
         {
-                SqlConnection Conn = Sql.Configuration();
+
+            SqlConnection Conn = new SqlConnection();
+            if (IsConnected)
+                Conn = Conected;
+            else
+                Conn = Sql.Configuration();
+
             //Conn = Sql.Configuration();
-                Conn.Open();
+            Conn.Open();
                 SqlCommand newCmd = new SqlCommand();
                 newCmd.Connection = Conn;
                 newCmd.CommandText = CommandText;
@@ -48,9 +56,13 @@ namespace ECMS
         }
         private string string_Check_PV(string CommandText)
         {
-                SqlConnection Conn = Sql.Configuration();
+            SqlConnection Conn = new SqlConnection();
+            if (IsConnected)
+                Conn = Conected;
+            else
+                Conn = Sql.Configuration();
             //Conn = Sql.Configuration();
-                Conn.Open();
+            Conn.Open();
                 SqlCommand newCmd = new SqlCommand();
                 newCmd.Connection = Conn;
                 newCmd.CommandText = CommandText;
@@ -74,7 +86,11 @@ namespace ECMS
         }
         private bool _bool_Check(string CMD)
         {
-            SqlConnection Conn = Sql.Configuration();
+            SqlConnection Conn = new SqlConnection();
+            if (IsConnected)
+                Conn = Conected;
+            else
+                Conn = Sql.Configuration();
             //Conn = Sql.Configuration();
             try
                 {
@@ -104,7 +120,11 @@ namespace ECMS
 
         private bool _ExcutionNonQuery(string CMD)
         {
-            SqlConnection Conn = Sql.Configuration();
+            SqlConnection Conn = new SqlConnection();
+            if (IsConnected)
+                Conn = Conected;
+            else
+                Conn = Sql.Configuration();
             //Conn = Sql.Configuration();
             try
             {

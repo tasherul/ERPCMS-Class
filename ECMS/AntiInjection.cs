@@ -17,7 +17,7 @@ namespace ECMS
         private bool Password_;
         private bool Url_;
         private bool Symbol_key_;
-        private bool Default_key_;
+        //private bool Default_key_;
         private bool Address_;
         public bool Address { set { Address_ = value; } }
         //public bool DefaultKey { set { Default_key_ = value; } }

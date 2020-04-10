@@ -23,6 +23,7 @@ namespace ECMS
         private string Mobile;
 
         // Input From Page Public Section
+        
         public string FirstName_Input
         { set { FirstName = value; } }
         public string SureName_Input
@@ -35,6 +36,8 @@ namespace ECMS
         { set { Password = value; } }
         public string Packege_Input
         { set { Packege = value; } }
+        public string Mobile_Input
+        { set { Mobile = value; } }
 
         /*--------------------------------------
          *           Private Section
@@ -59,17 +62,21 @@ namespace ECMS
          *          Private Section 
          *      Output The Operation in class
          * -------------------------------------*/
-        private bool UserName_Ver;
-        private bool Email_Ver;
-        private bool Mobile_Ver;
-        private string PasswordMessege_Type;
+       // private bool UserName_Ver;
+       // private bool Email_Ver;
+       // private bool Mobile_Ver;
+       // private string PasswordMessege_Type;
 
         /*--------------------------------------
          *      Private Security System
          * -------------------------------------*/
         private bool Security_;
         private string Messege_;
+        private bool _EmailVerify;
+        private bool _MobileVerify;
 
+        public bool EmailVerify { get { return _EmailVerify; } }
+        public bool MobileVerify { get { return _MobileVerify; } }
         //public bool UserNameAvaiable
         //{ get { return UserName_Ver; } }
         public string UserNameIcon { get; set; }
@@ -191,7 +198,7 @@ namespace ECMS
             Check __Ckh = new Check();
             Country = __Ip.Country;
             CountryCode = __Ip.CountryCode;
-            Mobile = __Ckh.stringCheck("select top 1 MobileCode from Country where Country_Name='"+ __Ip.Country + "'");
+            MobileCode = __Ckh.stringCheck("select top 1 MobileCode from Country where Country_Name='"+ __Ip.Country + "'");
             CountryIcon = __Ckh.stringCheck("select top 1 Country_Icon from Country where Country_Name='" + __Ip.Country + "'");
         }
 
@@ -241,10 +248,12 @@ namespace ECMS
                         string _UserName = __Enc.HashCode(UserName);
                         string _Password = __Enc.HashCode(Password);
                         __Chk.ExcutionNonQuery(string.Format(@"insert into Login (Reg_ID,UserName,Password,Encrypt_Code)", _Registation_id,_UserName,_Password,Encrypt_Key));
-                        Messege_ = string.Format(@"<div class='alert alert-icon-danger' role='alert'>
+                        Messege_ = string.Format(@"<div class='alert alert-icon-success' role='alert'>
                                 <i data-feather='alert-circle'></i>
                                    {0}
                              </div> ", "");
+                        _EmailVerify = EmailVerify;
+                        _MobileVerify = MobileVerify;
                         return true;
                     }
                     catch(Exception er)
