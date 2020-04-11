@@ -7,3 +7,10 @@ C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\ECMS.dll
 C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\ECMS.pdb
 C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\obj\Debug\ECMS.dll
 C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\obj\Debug\ECMS.pdb
+C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\MySql.Data.dll
+C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\Google.Protobuf.dll
+C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\Ubiety.Dns.Core.dll
+C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\Renci.SshNet.dll
+C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\MySql.Data.xml
+C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\obj\Debug\ECMS.csprojResolveAssemblyReference.cache

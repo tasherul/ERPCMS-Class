@@ -33,7 +33,7 @@ namespace ECMS
          * that is Default code to Main DB 
          *  --------------------------------------------------*/
         private bool __Encrypt=false;
-        private string __Key;
+        private string __Key= "P!@sH05";
 
         public string Key { set { __Key = value; } }
         public bool Encrypt { set { __Encrypt = value; } }
@@ -48,6 +48,10 @@ namespace ECMS
         private bool __SqlConnectionStatus;
         public bool SqlConnectionStatus { get { return __SqlConnectionStatus; } }
         public bool SqlConnectStatus()
+        {
+            return _SqlConnectStatus();
+        }
+        private bool _SqlConnectStatus()
         {
             //string ConnetionString = string.Format(@"Data Source={0};Initial Catalog={1};User ID={2};Password={3}",
             //       MainDB_DataSource,MainDB_DataBaseName,MainDB_UserID,MainDB_Password);
@@ -81,13 +85,11 @@ namespace ECMS
                     s.IntegratedSecurity = true;
                     con = new SqlConnection(s.ConnectionString);
                 }
-                
-                
-                         
-                if (con.State == ConnectionState.Closed)
-                    { ErrorMessage = "Success"; __SqlConnectionStatus = true; return true; }  
+                con.Open();
+                if (con.State == ConnectionState.Open)
+                    { ErrorMessage = "Success"; __SqlConnectionStatus = true; con.Close(); return true; }  
                 else
-                    { ErrorMessage = "Failed"; __SqlConnectionStatus = false;  return false;  }              
+                    { ErrorMessage = "Failed"; __SqlConnectionStatus = false; con.Close(); return false;  }              
             }
             catch(Exception er)
             {
@@ -96,6 +98,7 @@ namespace ECMS
                 return false;
             }           
         }
+
         public SqlConnection Configuration()
         {            
             //--------------------------------------
