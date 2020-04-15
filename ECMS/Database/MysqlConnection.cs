@@ -11,7 +11,7 @@ namespace ECMS
 {
     public class MysqlConnection
     {
-        private string _DataSource = "127.0.0.1";
+        private string _DataSource = "localhost";
         private string _Port = "3306";
         private string _UserName = "root";
         private string _Password = "";

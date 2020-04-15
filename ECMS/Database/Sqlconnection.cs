@@ -15,25 +15,24 @@ using System.Data.SqlClient;
 using System.IO;
 
 
-namespace ECMS
+namespace ECMS.Database
 {
-    public class Connection
+    public class Sqlconnection
     {
-        //
-        private string MainDB_DataBaseName= "ERCMSMainDB";
+        private string MainDB_DataBaseName = "ERCMSMainDB";
         private string MainDB_UserID = "MainDBuser";
         private string MainDB_Password = "Pi@sh885989";
         private string MainDB_DataSource = "DESKTOP-SUFDOAC";
-        
-        
+
+
         public bool ConnectionStringEnable { private get; set; }
         public string ConnectionString;
 
         /* ---------------------------------------------------
          * that is Default code to Main DB 
          *  --------------------------------------------------*/
-        private bool __Encrypt=false;
-        private string __Key= "P!@sH05";
+        private bool __Encrypt = false;
+        private string __Key = "P!@sH05";
 
         public string Key { set { __Key = value; } }
         public bool Encrypt { set { __Encrypt = value; } }
@@ -63,7 +62,7 @@ namespace ECMS
                 string UserID = MainDB_UserID;
                 string Password = MainDB_Password;
 
-                if(__Encrypt)
+                if (__Encrypt)
                 {
                     __Dek = new Decrypt();
                     __Dek.DecryptCode = __Key;
@@ -88,20 +87,20 @@ namespace ECMS
                 }
                 con.Open();
                 if (con.State == ConnectionState.Open)
-                    { ErrorMessage = "Success"; __SqlConnectionStatus = true; con.Close(); return true; }  
+                { ErrorMessage = "Success"; __SqlConnectionStatus = true; con.Close(); return true; }
                 else
-                    { ErrorMessage = "Failed"; __SqlConnectionStatus = false; con.Close(); return false;  }              
+                { ErrorMessage = "Failed"; __SqlConnectionStatus = false; con.Close(); return false; }
             }
-            catch(Exception er)
+            catch (Exception er)
             {
-                ErrorMessage = "Connection/"+er.Message;
+                ErrorMessage = "Connection/" + er.Message;
                 __SqlConnectionStatus = false;
                 return false;
-            }           
+            }
         }
 
         public SqlConnection Configuration()
-        {            
+        {
             //--------------------------------------
             // Copy the Encrypt text
             //--------------------------------------
@@ -140,12 +139,11 @@ namespace ECMS
                 SqlConnection cc = new SqlConnection(ConncetionString);
                 return cc;
             }
-            
+
             //----------------------------------------------------    
             //All are ok then SqlConnection is return to Excutive 
             //----------------------------------------------------          
-                      
-        }
 
+        }
     }
 }
