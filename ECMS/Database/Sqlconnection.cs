@@ -15,7 +15,7 @@ using System.Data.SqlClient;
 using System.IO;
 
 
-namespace ECMS.Database
+namespace ECMS
 {
     public class Sqlconnection
     {

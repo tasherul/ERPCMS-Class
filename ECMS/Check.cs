@@ -336,12 +336,13 @@ namespace ECMS
                 newCmd.CommandText = CommandText;
                 Conn.Open();
                 SqlDataReader _Sql = newCmd.ExecuteReader();
-                Conn.Close();
+                //Conn.Close();
                 Messege = "Success";
                 return _Sql;
             }
             catch (Exception er)
             {
+                Conn.Close();
                 ExMessege = er;
                 Messege = er.Message;
                 SqlDataReader _empty = null;
@@ -368,12 +369,13 @@ namespace ECMS
                 __Cmd.CommandText = CommandText;
                 __Conn.Open();
                 MySqlDataReader _Return = __Cmd.ExecuteReader();
-                __Conn.Close();
+                //__Conn.Close();
                 Messege = "Success";
                 return _Return;
             }
             catch (Exception er)
             {
+                __Conn.Close();
                 ExMessege = er;
                 Messege = er.Message;
                 MySqlDataReader _empty = null;
