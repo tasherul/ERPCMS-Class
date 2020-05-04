@@ -46,19 +46,26 @@
   <ItemGroup>
     <Compile Include="AntiInjection.cs" />
     <Compile Include="Check.cs" />
+    <Compile Include="Cookies\Cookies.cs" />
     <Compile Include="Database\Connection.cs" />
     <Compile Include="Database\MainDB.cs" />
     <Compile Include="Database\Sqlconnection.cs" />
     <Compile Include="DateTimeZone.cs" />
     <Compile Include="Decrypt.cs" />
+    <Compile Include="EMAIL.cs" />
     <Compile Include="Encrypt.cs" />
     <Compile Include="IPFinder.cs" />
     <Compile Include="Mail.cs" />
     <Compile Include="Database\MysqlConnection.cs" />
-    <Compile Include="Page\Registation.cs" />
+    <Compile Include="WebPage\IconMdi.cs" />
+    <Compile Include="WebPage\Login.cs" />
+    <Compile Include="WebPage\IconDataFeather.cs" />
+    <Compile Include="WebPage\Notification.cs" />
+    <Compile Include="WebPage\Registation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLQuery.cs" />
     <Compile Include="StringGenarator.cs" />
+    <Compile Include="XML\xmlWrite.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="MainDBConfig.xml" />

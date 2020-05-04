@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
-namespace ECMS
+namespace ECMS.WebPage
 {
-    public class Registation
+    public sealed class Registation
     {
         /*--------------------------------------
          *          Private Section
@@ -21,22 +22,23 @@ namespace ECMS
         private string Password;
         private string Packege;
         private string Mobile;
-
+        public string Key { get; set; }
         // Input From Page Public Section
-        
-        public string FirstName_Input
+        public string OTP { get; private set; }
+        public string EmailCode { get; private set; }
+        public string Input_FirstName
         { set { FirstName = value; } }
-        public string SureName_Input
+        public string Input_SureName
         { set { SureName = value; } }
-        public string Email_Input
+        public string Input_Email
         { set { Email = value; } }
-        public string UserName_Input
+        public string Input_UserName
         { set { UserName = value; } }
-        public string Password_Input
+        public string Input_Password
         { set { Password = value; } }
-        public string Packege_Input
+        public string Input_Packege
         { set { Packege = value; } }
-        public string Mobile_Input
+        public string Input_Mobile
         { set { Mobile = value; } }
 
         /*--------------------------------------
@@ -75,6 +77,7 @@ namespace ECMS
         private bool _EmailVerify;
         private bool _MobileVerify;
 
+        public string Message { get { return Messege_; } }
         public bool EmailVerify { get { return _EmailVerify; } }
         public bool MobileVerify { get { return _MobileVerify; } }
         //public bool UserNameAvaiable
@@ -86,6 +89,8 @@ namespace ECMS
         public string MobileIcon { get; set; }
         public string MobileMessege { get; set; }
         public bool PasswordRight { get; set; }
+        public string RegID { get; private set; }
+        public string LoginID { get; private set; }
         Check chk = new Check();
         public bool UserName_Avaiable(string UserName )
         {
@@ -190,7 +195,6 @@ namespace ECMS
                 return "<strong style='color:red;'>Harmful</strong>";
             }
         }
-
         public void Bind()
         {
             IPFinder __Ip = new IPFinder();
@@ -201,8 +205,7 @@ namespace ECMS
             MobileCode = __Ckh.stringCheck("select top 1 MobileCode from Country where Country_Name='"+ __Ip.Country + "'");
             CountryIcon = __Ckh.stringCheck("select top 1 Country_Icon from Country where Country_Name='" + __Ip.Country + "'");
         }
-
-        public bool Reg()
+        private bool _Reg()
         {
             AntiInjection ant = new AntiInjection();
             ant.FullName = true;
@@ -232,29 +235,66 @@ namespace ECMS
                         bool MobileVerify = false;
                         //----------------------------------------------
                         Bind();
-                        Check __Chk = new Check();
-                        __Chk.ExcutionNonQuery(string.Format(@"insert into DeveloperRegistation (FastName,LastName,UserName,Email,Mobile,Country,Country_ID,Max_Apps,EmailVerify,MobileVerify)",
-                            FirstName,SureName,UserName,Email,Mobile,Country,__Chk.stringCheck("select Country_ID from Country where Country_Name='"+Country+"'"),Max_App,EmailVerify.ToString(),MobileVerify.ToString()));
-                        string _Registation_id = __Chk.stringCheck("select Reg_ID from DeveloperRegistation where UserName='"+UserName+"'");
+                        //-----------------------------------------------
+                        //-----------------------------------------------
                         StringGenarator __ran = new StringGenarator();
                         __ran.TotalString = 10;/// setting update
                         //-------------------------------------------
                         __ran.Hexadecimal = true;
-                        string Encrypt_Key = __ran.RandomStringNumber("DeveloperRegistation", 2,'-');
+                        string Encrypt_Key = __ran.RandomStringNumber("DeveloperRegistation", 2, '-');
+                        __ran.TotalString = 5;
+                        __ran.Number = true;
+                        __ran.Hexadecimal = false;
+                        __ran.DatabaseEntry = false;
+                        string OTP = __ran.RandomStringNumber("OPT");
+                        this.OTP = OTP;
+                        __ran.TotalString = 20;
+                        __ran.Number = true;
+                        __ran.ApperCase=true;
+                        __ran.DatabaseEntry = false;
+                        string EmailCode = __ran.RandomStringNumber("EmailCode");
+                        this.EmailCode = EmailCode;
+                        //------------------------------------------------
+                        //------------------------------------------------
+                        Check __Chk = new Check();
+                        IPFinder _IPLocation = new IPFinder();
+                        //_IPLocation.IPDetails();
+                        var Offset = __Chk.stringCheck("select Offset from TimeZone where Time_Zone='" + _IPLocation.TimeZone + "' ");
+                        DateTimeZone __Dt = new DateTimeZone(Offset);
+                        bool f1= __Chk.ExcutionNonQuery(string.Format(@"insert into DeveloperRegistation (FastName,LastName,UserName,Email,Mobile,Country,Country_ID,Max_Apps,EmailVerify,MobileVerify,Profileimage,imagebyte,Active,EmailShow,NumberShow,JoinDate,AccountAbility)
+                        values('{0}','{1}','{2}','{3}','{4}','{5}',{6},{7},'{8}','{9}','{10}',{11},'{12}','{13}','{14}','{15}','{16}')",
+                            FirstName,SureName,UserName,Email,Mobile,Country,__Chk.stringCheck("select Country_ID from Country where Country_Name='"+Country+"'"),Max_App, EmailCode, OTP, "Profile/noimage.jpg", 24576,"Online","true","true", __Dt.DateTimes(),"true"));
+                        string _Registation_id = __Chk.stringCheck("select Reg_ID from DeveloperRegistation where UserName='"+UserName+"'");
+                        
                         //randomly add the encrypt key it unique
                         Encrypt __Enc = new Encrypt();
                         __Enc.EncryptCode = Encrypt_Key;
+                        Key = Encrypt_Key;
                         // set the encript key to add database 
                         string _UserName = __Enc.HashCode(UserName);
                         string _Password = __Enc.HashCode(Password);
-                        __Chk.ExcutionNonQuery(string.Format(@"insert into Login (Reg_ID,UserName,Password,Encrypt_Code)", _Registation_id,_UserName,_Password,Encrypt_Key));
+                        bool f2 = __Chk.ExcutionNonQuery(string.Format(@"insert into Login (Reg_ID,UserName,Password,Encrypt_Code) values({0},'{1}','{2}','{3}')", _Registation_id,_UserName,_Password,Encrypt_Key));
                         Messege_ = string.Format(@"<div class='alert alert-icon-success' role='alert'>
                                 <i data-feather='alert-circle'></i>
                                    {0}
-                             </div> ", "");
+                             </div> ", "Registation Complete.");
                         _EmailVerify = EmailVerify;
                         _MobileVerify = MobileVerify;
-                        return true;
+
+                        RegID = __Enc.HashCode(__Chk.stringCheck("select Reg_ID from DeveloperRegistation where UserName='"+UserName+"' "));
+                        LoginID = __Enc.HashCode(__Chk.stringCheck("select Login_ID from Login where UserName='" + UserName + "' "));
+                        if (f1 && f2)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            Messege_ = string.Format(@"<div class='alert alert-icon-danger' role='alert'>
+                                <i data-feather='alert-circle'></i>
+                                   {0}
+                             </div> ", __Chk.Messege);
+                            return false;
+                        }
                     }
                     catch(Exception er)
                     {
@@ -264,7 +304,7 @@ namespace ECMS
                              </div> ",er.Message);
                         return false;
                     }
-                    
+                     
                 }
                 else
                 {
@@ -285,6 +325,11 @@ namespace ECMS
                 return false;
              }
         }
+        public bool Reg()
+        {
+            return _Reg();
+        }     
+
 
     }
 }

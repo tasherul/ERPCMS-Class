@@ -14,3 +14,8 @@ C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\Ubiety.Dns.
 C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\Renci.SshNet.dll
 C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\MySql.Data.xml
 C:\Users\Tasherul Islam\Documents\GitHub\ERPCMS-Class\ECMS\obj\Debug\ECMS.csprojResolveAssemblyReference.cache
+C:\Users\tashe\OneDrive\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\ECMS.dll
+C:\Users\tashe\OneDrive\Documents\GitHub\ERPCMS-Class\ECMS\bin\Debug\ECMS.pdb
+C:\Users\tashe\OneDrive\Documents\GitHub\ERPCMS-Class\ECMS\obj\Debug\ECMS.dll
+C:\Users\tashe\OneDrive\Documents\GitHub\ERPCMS-Class\ECMS\obj\Debug\ECMS.pdb
+C:\Users\tashe\OneDrive\Documents\GitHub\ERPCMS-Class\ECMS\obj\Debug\ECMS.csprojResolveAssemblyReference.cache

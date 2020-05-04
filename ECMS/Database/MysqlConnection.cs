@@ -18,7 +18,7 @@ namespace ECMS
         private string _DatabaseName = "test";
         private bool __Encrypt = false;
         private string __Key= "P!@sH05";
-
+        
         public string DataSource { set { _DataSource = value; } }
         public string Port { set { _Port = value; } }
         public string UserName { set { _UserName = value; } }

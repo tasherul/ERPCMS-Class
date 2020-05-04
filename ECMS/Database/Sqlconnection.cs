@@ -20,9 +20,9 @@ namespace ECMS
     public class Sqlconnection
     {
         private string MainDB_DataBaseName = "ERCMSMainDB";
-        private string MainDB_UserID = "MainDBuser";
+        private string MainDB_UserID = "MainDBusers";
         private string MainDB_Password = "Pi@sh885989";
-        private string MainDB_DataSource = "DESKTOP-SUFDOAC";
+        private string MainDB_DataSource = "DESKTOP-FOOHGE0";
 
 
         public bool ConnectionStringEnable { private get; set; }

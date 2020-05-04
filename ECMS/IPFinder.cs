@@ -6,13 +6,17 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-
+using ECMS.Cookies;
+using ECMS.WebPage;
 namespace ECMS
 {
     public class IPFinder
     {
         
-        Registation r = new Registation();
+        public IPFinder()
+        {
+            IPDetails();
+        }
         
         public string Status;
         public string Country;
