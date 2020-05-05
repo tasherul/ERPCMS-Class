@@ -87,6 +87,10 @@ namespace ECMS.Cookies
         /// </summary>
         public string Email { get; private set; }
         /// <summary>
+        /// CheckCookies() Function get; MobileNumber data view from database
+        /// </summary>
+        public string MobileNumber { get; private set; }
+        /// <summary>
         /// CheckCookies() Function get; Max_Apps data view from database
         /// </summary>
         public int Max_Apps { get; private set; }
@@ -274,8 +278,8 @@ CurrentDevice(Device), Device));
             }
             if (!chkExcute)
                 ErrorMessage = "Excute Error: "+__Check.Messege;
-            //if (!updateActive)
-            //    ErrorMessage +="update Error: "+ __Check.Messege;
+            if (!updateActive)
+                ErrorMessage += "update Error: " + __Check.Messege;
 
             return _Cookies;
         }
@@ -333,6 +337,7 @@ CurrentDevice(Device), Device));
                     Profileimage = __Check.stringCheck("select Profileimage " + st);
                     Active = __Check.stringCheck("select Active " + st);
                     Discription = __Check.stringCheck("select Discription " + st);
+                    MobileNumber = __Check.stringCheck("select Mobile " + st);
                     Website = __Check.stringCheck("select Website " + st);
                     EmailShow = __Check.stringCheck("select EmailShow " + st) == "true" || __Check.stringCheck("select EmailShow " + st) == "True" || __Check.stringCheck("select EmailShow " + st) == "TRUE" ? true : false;
                     NumberShow = __Check.stringCheck("select NumberShow " + st) == "true" || __Check.stringCheck("select NumberShow " + st) == "True" || __Check.stringCheck("select NumberShow " + st) == "TRUE" ? true : false;

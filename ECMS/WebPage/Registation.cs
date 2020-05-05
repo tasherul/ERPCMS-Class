@@ -91,6 +91,7 @@ namespace ECMS.WebPage
         public bool PasswordRight { get; set; }
         public string RegID { get; private set; }
         public string LoginID { get; private set; }
+        public string Offset { get; private set; }
         Check chk = new Check();
         public bool UserName_Avaiable(string UserName )
         {
@@ -124,7 +125,7 @@ namespace ECMS.WebPage
         }
         public bool Mobile_Avaiable(string Mobile)
         {
-            if (chk.int32Check("select count(*) from DeveloperRegistation where Email='" + Email + "' ") == 0)
+            if (chk.int32Check("select count(*) from DeveloperRegistation where Mobile='" + Mobile + "' ") == 0)
             {
                 MobileIcon = "<i data-feather='check' style='color:forestgreen;'></i>";
                 MobileMessege = "";
@@ -208,9 +209,10 @@ namespace ECMS.WebPage
         private bool _Reg()
         {
             AntiInjection ant = new AntiInjection();
-            ant.FullName = true;
+
             ant.Email = true;
             ant.Password = true;
+            ant.Url = true;
             //------------------------------------------
             // anti injection for security purpass
             // it will secure the boolien methord
@@ -261,9 +263,10 @@ namespace ECMS.WebPage
                         //_IPLocation.IPDetails();
                         var Offset = __Chk.stringCheck("select Offset from TimeZone where Time_Zone='" + _IPLocation.TimeZone + "' ");
                         DateTimeZone __Dt = new DateTimeZone(Offset);
+                        this.Offset = Offset;
                         bool f1= __Chk.ExcutionNonQuery(string.Format(@"insert into DeveloperRegistation (FastName,LastName,UserName,Email,Mobile,Country,Country_ID,Max_Apps,EmailVerify,MobileVerify,Profileimage,imagebyte,Active,EmailShow,NumberShow,JoinDate,AccountAbility)
                         values('{0}','{1}','{2}','{3}','{4}','{5}',{6},{7},'{8}','{9}','{10}',{11},'{12}','{13}','{14}','{15}','{16}')",
-                            FirstName,SureName,UserName,Email,Mobile,Country,__Chk.stringCheck("select Country_ID from Country where Country_Name='"+Country+"'"),Max_App, EmailCode, OTP, "Profile/noimage.jpg", 24576,"Online","true","true", __Dt.DateTimes(),"true"));
+                            FirstName,SureName,UserName,Email,Mobile,Country,__Chk.stringCheck("select Country_ID from Country where Country_Name='"+Country+"'"),Max_App, EmailCode, OTP, "image/Profile/noimage.jpg", 24576,"Online","true","true", __Dt.DateTimes(),"true"));
                         string _Registation_id = __Chk.stringCheck("select Reg_ID from DeveloperRegistation where UserName='"+UserName+"'");
                         
                         //randomly add the encrypt key it unique
@@ -281,8 +284,8 @@ namespace ECMS.WebPage
                         _EmailVerify = EmailVerify;
                         _MobileVerify = MobileVerify;
 
-                        RegID = __Enc.HashCode(__Chk.stringCheck("select Reg_ID from DeveloperRegistation where UserName='"+UserName+"' "));
-                        LoginID = __Enc.HashCode(__Chk.stringCheck("select Login_ID from Login where UserName='" + UserName + "' "));
+                        RegID = __Chk.stringCheck("select Reg_ID from DeveloperRegistation where UserName='"+UserName+"' ");
+                        LoginID = __Chk.stringCheck("select Login_ID from Login where UserName='" + __Enc.HashCode(UserName) + "' ");
                         if (f1 && f2)
                         {
                             return true;

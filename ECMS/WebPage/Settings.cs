@@ -63,9 +63,91 @@ namespace ECMS.WebPage
         {
             return Convert.ToDateTime(__Check.stringCheck("select Value_DateTime from System_Settings where SettingsName='" + SettingsName + "'"));
         }
-         
+        private object _GetValue(int ID)
+        {
+            var Value_Type = __Check.stringCheck("select Value_Type from System_Settings where SettingsID=" + ID);
+            if(Value_Type== "Int" ||Value_Type=="int")
+            {
+                return __Check.int32Check("select Value_Int from System_Settings where SettingsID=" + ID);
+            }
+            else if(Value_Type == "Float" || Value_Type == "float")
+            {
+                return Convert.ToDouble(__Check.stringCheck("select Value_Float from System_Settings where SettingsID=" + ID));
+            }
+            else if(Value_Type == "String" || Value_Type == "string")
+            {
+                return __Check.int32Check("select Value_String from System_Settings where SettingsID=" + ID);
+            }
+            else if(Value_Type == "Bool" || Value_Type == "bool")
+            {
+                var returnValue = __Check.stringCheck("select Value_Bool from System_Settings where SettingsID=" + ID);
+                return returnValue == "True" || returnValue == "true" ? true : false;
+            }
+            else if(Value_Type == "DateTime" || Value_Type == "datetime")
+            {
+                return Convert.ToDateTime(__Check.stringCheck("select Value_DateTime from System_Settings where SettingsID=" + ID));
+            }
+            else
+            {
+                return __Check.stringCheck("select Value_Int from System_Settings where SettingsID=" + ID)+
+                    __Check.stringCheck("select Value_Float from System_Settings where SettingsID=" + ID)+
+                    __Check.stringCheck("select Value_String from System_Settings where SettingsID=" + ID)+
+                    __Check.stringCheck("select Value_Bool from System_Settings where SettingsID=" + ID)+
+                    __Check.stringCheck("select Value_DateTime from System_Settings where SettingsID=" + ID);
+            }
+
+        }
+        private object _GetValue(string SettingsName)
+        {
+            var Value_Type = __Check.stringCheck("select Value_Type from System_Settings where SettingsName='" + SettingsName + "'");
+            if (Value_Type == "Int" || Value_Type == "int")
+            {
+                return __Check.int32Check("select Value_Int from System_Settings where SettingsName='" + SettingsName + "'");
+            }
+            else if (Value_Type == "Float" || Value_Type == "float")
+            {
+                return Convert.ToDouble(__Check.stringCheck("select Value_Float from System_Settings where SettingsName='" + SettingsName + "'"));
+            }
+            else if (Value_Type == "String" || Value_Type == "string")
+            {
+                return __Check.int32Check("select Value_String from System_Settings where SettingsName='" + SettingsName + "'");
+            }
+            else if (Value_Type == "Bool" || Value_Type == "bool")
+            {
+                var returnValue = __Check.stringCheck("select Value_Bool from System_Settings where SettingsName='" + SettingsName + "'");
+                return returnValue == "True" || returnValue == "true" ? true : false;
+            }
+            else if (Value_Type == "DateTime" || Value_Type == "datetime")
+            {
+                return Convert.ToDateTime(__Check.stringCheck("select Value_DateTime from System_Settings where SettingsName='" + SettingsName + "'"));
+            }
+            else
+            {
+                return  __Check.stringCheck("select Value_Int from System_Settings where SettingsName='" + SettingsName + "'") +
+                        __Check.stringCheck("select Value_Float from System_Settings where SettingsName='" + SettingsName + "'") +
+                        __Check.stringCheck("select Value_String from System_Settings where SettingsName='" + SettingsName + "'") +
+                        __Check.stringCheck("select Value_Bool from System_Settings where SettingsName='" + SettingsName + "'") +
+                        __Check.stringCheck("select Value_DateTime from System_Settings where SettingsName='" + SettingsName + "'");
+            }
+        }
 
 
+
+
+        /// <summary>
+        /// This is a geting any valu to value type setting.
+        /// </summary>
+        /// <param name="ID">need settings id</param>
+        /// <returns>return any data to setting value type.</returns>
+        public object GetValue(int ID)
+        { return _GetValue(ID); }
+        /// <summary>
+        /// This is a geting any valu to value type setting.
+        /// </summary>
+        /// <param name="SettingsName">need settings Name</param>
+        /// <returns>return any data to setting value type.</returns>
+        public object GetValue(string SettingsName)
+        { return _GetValue(SettingsName); }
         /// <summary>
         /// DateTime value show in Settings Get_DateTimeValue_Settings() function.
         /// </summary>
@@ -162,6 +244,9 @@ namespace ECMS.WebPage
         {
             return _Get_StringValue_Settings(SettingsName);
         }
+
+
+
 
 
     }

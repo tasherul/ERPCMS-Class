@@ -18,6 +18,7 @@ namespace ECMS
         public string Messege { get; set; }
         public string Email { get; set; }
         public string ErrorMessage { get; set; }
+
         private bool _Mail()
         {
             try

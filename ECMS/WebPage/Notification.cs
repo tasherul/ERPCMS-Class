@@ -17,19 +17,24 @@ namespace ECMS.WebPage
         public string Offset { get; set; }
         public string RegID { get; set; }
 
+        public string ErrorMessage { get; private set; }
         private bool _AddNotification()
         {
             DateTimeZone __DateTimeZone = new DateTimeZone(Offset);
-            return __Check.ExcutionNonQuery(string.Format(@"insert into System_Notifications 
+            bool returnVal = __Check.ExcutionNonQuery(string.Format(@"insert into System_Notifications 
             (Reg_ID,Title,Icon,Link,DateTime)  values({0},'{1}','{2}','{3}','{4}')",
             RegID,Title, Icon.ToString().Replace("_", "-"), Link, __DateTimeZone.DateTimes()));
+            ErrorMessage = __Check.Messege;
+            return returnVal;
         }
         private bool _AddNotification(string Title,string Link, IconDataFeather Icon,string Offset,string RegID)
         {
             DateTimeZone __DateTimeZone = new DateTimeZone(Offset);
-            return __Check.ExcutionNonQuery(string.Format(@"insert into System_Notifications 
+            bool returnVal = __Check.ExcutionNonQuery(string.Format(@"insert into System_Notifications 
             (Reg_ID,Title,Icon,Link,DateTime)  values({0},'{1}','{2}','{3}','{4}')",
             RegID, Title, Icon.ToString().Replace("_","-"), Link, __DateTimeZone.DateTimes()));
+            ErrorMessage = __Check.Messege;
+            return returnVal;
         }
         private string _timeago(string PastDateTime, string NowDateTime)
         {
