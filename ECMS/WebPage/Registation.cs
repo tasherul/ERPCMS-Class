@@ -333,6 +333,28 @@ namespace ECMS.WebPage
             return _Reg();
         }     
 
+        private bool _EmailVerification(string VeryficationCode, string RegID)
+        {
+            bool ChkCode = chk.int32Check("select count(*) from DeveloperRegistation where EmailVerify='" + VeryficationCode + "' and Reg_ID=" + RegID) == 1 ? true : false;
+            if(ChkCode)
+            {
+                bool returnVal = chk.ExcutionNonQuery("update DeveloperRegistation set EmailVerify='true' where Reg_ID="+RegID);
+                Messege_ = @"<div class='alert alert-icon-danger' role='alert'>
+                                <i data-feather='alert-circle'></i>
+                                   "+chk.Messege+"</div>";
+                return returnVal;
+            }
+            else
+            {
+                Messege_ = @"<div class='alert alert-icon-danger' role='alert'>
+                                <i data-feather='alert-circle'></i>
+                                   Email verification is not valid id.
+                             </div>";
+                return false;
+            }
+        }
+        public bool EmailVerification(string VeryficationCode, string RegID)
+        { return _EmailVerification(VeryficationCode, RegID); }
 
     }
 }
