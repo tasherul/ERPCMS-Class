@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ECMS.WebPage
 {
-    public sealed class Registation
+    public class Registation
     {
         /*--------------------------------------
          *          Private Section
@@ -328,6 +328,7 @@ namespace ECMS.WebPage
                 return false;
              }
         }
+
         public bool Reg()
         {
             return _Reg();
@@ -356,5 +357,39 @@ namespace ECMS.WebPage
         public bool EmailVerification(string VeryficationCode, string RegID)
         { return _EmailVerification(VeryficationCode, RegID); }
 
+
+
+        private bool _UpdateDetails(UpdateClasses Details)
+        {
+            AntiInjection a = new AntiInjection();
+            a.Url = true;a.FullName = true;a.Address = true;
+            if (a.StringData(Details.FirstName) && a.StringData(Details.LastName) && a.StringData(Details.Region) && a.StringData(Details.Website) && a.StringData(Details.Discription))
+            {
+                bool returnVal = chk.ExcutionNonQuery("update DeveloperRegistation set Active='" + Details.Active + "',FastName='" + Details.FirstName + "',LastName='" + Details.LastName + "',Discription='" + Details.Discription + "', Website='" + Details.Website + "',Region='" + Details.Region + "',EmailShow='" + Details.EmailShow + "',NumberShow='" + Details.MobileShow + "' where Reg_ID=" + Details.RegID);
+                Messege_ = chk.Messege;
+                return returnVal;
+            }
+            else
+            {
+                Messege_ = "Security Thread.";
+                return false;
+            }
+        }
+        public bool UpdateDetails(UpdateClasses Details)
+        { return _UpdateDetails(Details); }
+
+
+    }
+    public class UpdateClasses
+    {
+        public string RegID { get; set; }
+        public string Active { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Region { get; set; }
+        public string Discription { get; set; }
+        public string Website { get; set; }
+        public bool MobileShow { get; set; }
+        public bool EmailShow { get; set; }
     }
 }

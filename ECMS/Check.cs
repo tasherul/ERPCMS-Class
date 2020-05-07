@@ -257,6 +257,7 @@ namespace ECMS
             {
                 MySqlConnection __Conn = new MySqlConnection();
                 MySqlCommand __Cmd = new MySqlCommand();
+                
                 //-----------------------------------------------
                 // set the mysql connection fix configratioin or set configaration
                 //------------------------------------------------
@@ -286,6 +287,7 @@ namespace ECMS
             {
                 SqlConnection Conn = new SqlConnection();
                 SqlCommand newCmd = new SqlCommand();
+                
                 //-----------------------------------------------
                 // set the sql connection fix configratioin or set configaration
                 //------------------------------------------------
@@ -314,6 +316,8 @@ namespace ECMS
             return ReturnValue;
 
         }
+
+
         public bool boolCheck(string CommandText)
         {
             return _bool_Check(CommandText);

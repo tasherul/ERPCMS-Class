@@ -36,6 +36,7 @@ namespace ECMS.WebPage
             ErrorMessage = __Check.Messege;
             return returnVal;
         }
+
         private string _timeago(string PastDateTime, string NowDateTime)
         {
             var OTime = Convert.ToDateTime(PastDateTime);
@@ -209,6 +210,9 @@ namespace ECMS.WebPage
             int years = Convert.ToInt32(Math.Floor((double)ts.Days / 365));
             return years <= 1 ? "one year ago" : years + " years ago";
         }
+
+
+
 
         /// <summary>
         /// This is a timeago function to set the datetine and past datetime and find how many time ago posting.

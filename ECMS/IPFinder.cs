@@ -80,12 +80,39 @@ namespace ECMS
             IP = respnseXML.Item(0).ChildNodes[13].InnerText.ToString();
 
         }
+        private void __IPDetails(string IP)
+        {
+            string ipaddress = IP;
+            string ipResponse = IPRequestHelper("http://ip-api.com/xml/" + ipaddress);
+            XmlDocument ipInfoxml = new XmlDocument();
+            ipInfoxml.LoadXml(ipResponse);
+            XmlNodeList respnseXML = ipInfoxml.GetElementsByTagName("query");
+            Status = respnseXML.Item(0).ChildNodes[0].InnerText.ToString();
+            Country = respnseXML.Item(0).ChildNodes[1].InnerText.ToString();
+            CountryCode = respnseXML.Item(0).ChildNodes[2].InnerText.ToString();
+            Region = respnseXML.Item(0).ChildNodes[3].InnerText.ToString();
+            RegionName = respnseXML.Item(0).ChildNodes[4].InnerText.ToString();
+            City = respnseXML.Item(0).ChildNodes[5].InnerText.ToString();
+            Zip = respnseXML.Item(0).ChildNodes[6].InnerText.ToString();
+            Lactitute = respnseXML.Item(0).ChildNodes[7].InnerText.ToString();
+            Longitude = respnseXML.Item(0).ChildNodes[8].InnerText.ToString();
+            TimeZone = respnseXML.Item(0).ChildNodes[9].InnerText.ToString();
+            ISP = respnseXML.Item(0).ChildNodes[10].InnerText.ToString();
+            Organization = respnseXML.Item(0).ChildNodes[11].InnerText.ToString();
+            As = respnseXML.Item(0).ChildNodes[12].InnerText.ToString();
+            IP = respnseXML.Item(0).ChildNodes[13].InnerText.ToString();
+        }
+
+
         public void IPDetails()
         {
             __IPDetails();
         }
+        public void IPDetails(string IP)
+        { __IPDetails(IP); }
         public string IPAddress()
         { return getIP(); }
+
 
     }
 }
