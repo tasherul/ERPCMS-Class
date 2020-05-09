@@ -52,6 +52,7 @@
     <Compile Include="Database\Sqlconnection.cs" />
     <Compile Include="DateTimeZone.cs" />
     <Compile Include="Decrypt.cs" />
+    <Compile Include="Design\Design.cs" />
     <Compile Include="EMAIL.cs" />
     <Compile Include="Encrypt.cs" />
     <Compile Include="IPFinder.cs" />
@@ -75,6 +76,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

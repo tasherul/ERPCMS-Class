@@ -367,6 +367,38 @@ CurrentDevice(Device), Device));
         /// <returns></returns>
         public bool CheckCookies(string[] CookiesValues)
         { return _CheckCookies(CookiesValues); }
+        private bool _logoutClear(string[] CookiesValues)
+        {
+            if (CookiesValues.Length == _Cookies_Name.Length)
+            {
+                var Key = CookiesValues[0];
+                __Decrypt.DecryptCode = Key;
+                string[] Decrypt_CookiesValues = new string[CookiesValues.Length];
+                for (int i = 1; i < CookiesValues.Length; i++)
+                { Decrypt_CookiesValues[i] = __Decrypt.GetDecryptHashCode(CookiesValues[i]); }
+                //------- Decrypt Coding for value
+                var SessionID = Decrypt_CookiesValues[1];//session id
+                var RegID = Decrypt_CookiesValues[7];//reg id
+                if (__Check.int32Check("select count(*) from System_Session where Session_id='" + SessionID + "' and Active='true' ") == 1)
+                {
+                    bool updateActive = __Check.ExcutionNonQuery("update System_Session set Active='false' where Reg_ID='" + RegID + "' and Session_id='"+SessionID+"' ");
+                    ErrorMessage = "<Code:154 | Page:Cookies > Error: " + __Check.Messege;
+                    return true;
+                }
+                 else
+                {
+                    ErrorMessage = "<Code:153 | Page:Cookies > Error: "+ __Check.Messege;
+                    return false;
+                }
+            }
+            else
+            {
+                ErrorMessage = "<Code:152 | Page:Cookies> Error: Cookies Length issues.";
+                return false;
+            }
+        }
+        public bool loginClear(string[] CookiesValues)
+        { return _logoutClear(CookiesValues); }
 
     }
 }
