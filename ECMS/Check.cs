@@ -316,8 +316,78 @@ namespace ECMS
             return ReturnValue;
 
         }
+        private bool _ExcutionNonQuery(string CommandText,SqlParameter[] Parameter)
+        {
+            SqlConnection Conn = new SqlConnection();
+            SqlCommand newCmd = new SqlCommand();
+
+            //-----------------------------------------------
+            // set the sql connection fix configratioin or set configaration
+            //------------------------------------------------
+            if (IsConnected)
+                Conn = Conected;
+            else
+                Conn = Sql.Configuration();
+
+            try
+            {
+                newCmd.Connection = Conn;
+                newCmd.CommandText = CommandText;
+                newCmd.Parameters.AddRange(Parameter);
+                Conn.Open();
+                newCmd.ExecuteNonQuery().ToString();
+                Conn.Close();
+                Messege = "Success";
+                return true;
+            }
+            catch (Exception er)
+            {
+                ExMessege = er;
+                Messege = er.Message;
+                return false;
+            }
+        }
+        private bool _ExcutionNonQuery(string CommandText, MySqlParameter[] Parameter)
+        {
+            MySqlConnection __Conn = new MySqlConnection();
+            MySqlCommand __Cmd = new MySqlCommand();
+
+            //-----------------------------------------------
+            // set the mysql connection fix configratioin or set configaration
+            //------------------------------------------------
+            if (IsMySqlConnected)
+                __Conn = MyConnected;
+            else
+                __Conn = MySql.Configuration();
+            //-----------------------------------------------
+            try
+            {
+                __Cmd.Connection = __Conn;
+                __Cmd.CommandText = CommandText;
+                Array s = Parameter;
+                __Cmd.Parameters.AddRange(Parameter);
+                __Conn.Open();
+                __Cmd.ExecuteNonQuery().ToString();
+                __Conn.Close();
+                Messege = "Success";
+                return true;
+            }
+            catch (Exception er)
+            {
+                ExMessege = er;
+                Messege = er.Message;
+                return false;
+            }
+        }
 
 
+
+        public bool ExcutionNonQuery(string CommandText, SqlParameter[] Parameter)
+        { return _ExcutionNonQuery(CommandText, Parameter); }
+        public bool ExcutionNonQuery(string CommandText, MySqlParameter[] Parameter)
+        {
+            return _ExcutionNonQuery(CommandText, Parameter);
+        }
         public bool boolCheck(string CommandText)
         {
             return _bool_Check(CommandText);
@@ -338,7 +408,7 @@ namespace ECMS
             {
                 newCmd.Connection = Conn;
                 newCmd.CommandText = CommandText;
-                Conn.Open();
+                Conn.Open();                
                 SqlDataReader _Sql = newCmd.ExecuteReader();
                 //Conn.Close();
                 Messege = "Success";

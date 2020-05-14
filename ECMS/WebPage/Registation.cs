@@ -92,6 +92,7 @@ namespace ECMS.WebPage
         public string RegID { get; private set; }
         public string LoginID { get; private set; }
         public string Offset { get; private set; }
+        public int MaxStorage { get; private set; }
         Check chk = new Check();
         public bool UserName_Avaiable(string UserName )
         {
@@ -264,9 +265,12 @@ namespace ECMS.WebPage
                         var Offset = __Chk.stringCheck("select Offset from TimeZone where Time_Zone='" + _IPLocation.TimeZone + "' ");
                         DateTimeZone __Dt = new DateTimeZone(Offset);
                         this.Offset = Offset;
-                        bool f1= __Chk.ExcutionNonQuery(string.Format(@"insert into DeveloperRegistation (FastName,LastName,UserName,Email,Mobile,Country,Country_ID,Max_Apps,EmailVerify,MobileVerify,Profileimage,imagebyte,Active,EmailShow,NumberShow,JoinDate,AccountAbility)
-                        values('{0}','{1}','{2}','{3}','{4}','{5}',{6},{7},'{8}','{9}','{10}',{11},'{12}','{13}','{14}','{15}','{16}')",
-                            FirstName,SureName,UserName,Email,Mobile,Country,__Chk.stringCheck("select Country_ID from Country where Country_Name='"+Country+"'"),Max_App, EmailCode, OTP, "image/Profile/noimage.jpg", 24576,"Online","true","true", __Dt.DateTimes(),"true"));
+                        Settings __Settings = new Settings();
+                        var MaxStorage = __Settings.Get_InValue_Settings(2);//Max Storage in Settings
+                        this.MaxStorage = MaxStorage;
+                        bool f1= __Chk.ExcutionNonQuery(string.Format(@"insert into DeveloperRegistation (FastName,LastName,UserName,Email,Mobile,Country,Country_ID,Max_Apps,EmailVerify,MobileVerify,Profileimage,imagebyte,Active,EmailShow,NumberShow,JoinDate,AccountAbility,MaxStorage)
+                        values('{0}','{1}','{2}','{3}','{4}','{5}',{6},{7},'{8}','{9}','{10}',{11},'{12}','{13}','{14}','{15}','{16}',{17})",
+                            FirstName,SureName,UserName,Email,Mobile,Country,__Chk.stringCheck("select Country_ID from Country where Country_Name='"+Country+"'"),Max_App, EmailCode, OTP, "image/Profile/noimage.jpg", 24576,"Online","true","true", __Dt.DateTimes(),"true",MaxStorage));
                         string _Registation_id = __Chk.stringCheck("select Reg_ID from DeveloperRegistation where UserName='"+UserName+"'");
                         
                         //randomly add the encrypt key it unique
