@@ -26,6 +26,20 @@ namespace ECMS
                 }
             }
         }
+        public string HashCode(string Text,string Key)
+        {
+            byte[] data = UTF8Encoding.UTF8.GetBytes(Text);
+            using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
+            {
+                byte[] keys = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(Key));
+                using (TripleDESCryptoServiceProvider tripDes = new TripleDESCryptoServiceProvider() { Key = keys, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7 })
+                {
+                    ICryptoTransform transfrom = tripDes.CreateEncryptor();
+                    byte[] results = transfrom.TransformFinalBlock(data, 0, data.Length);
+                    return Convert.ToBase64String(results, 0, results.Length);
+                }
+            }
+        }
         public string HashCode(string Text)
         {
             return Encrypt_String(Text);

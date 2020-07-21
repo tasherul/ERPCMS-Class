@@ -15,6 +15,7 @@ using System.Data.SqlClient;
 using System.IO;
 using MySql.Data.MySqlClient;
 using MySql;
+using ECMS.Design;
 namespace ECMS
 {
     public class Check
@@ -33,7 +34,8 @@ namespace ECMS
         public MySqlConnection MyConnected { private get; set; }
         private bool _MySqlEnable = false;
         public bool MySqlEnable {set { _MySqlEnable = value; } }
-        public Exception ExMessege { get; private set; }       
+        public Exception ExMessege { get; private set; }      
+        public string ServerMessage { get; private set; } 
         public string Messege { get; private set; }
         public int CommandTimeout { get; set; }
         public int BoolCount
@@ -105,6 +107,74 @@ namespace ECMS
         {
             return int_Check_PV(CommandText);
         }
+        public int int32Check(string CommandText,T_Parameter[] Parameter)
+        {
+            int ReturnValue = -1;
+            // the return value is fixed;
+            //-----------------------------------------------------
+            if (_MySqlEnable)
+            {
+                MySqlConnection __Conn = new MySqlConnection();
+                MySqlCommand __Cmd = new MySqlCommand();
+                //-----------------------------------------------
+                // set the mysql connection fix configratioin or set configaration
+                //------------------------------------------------
+                if (IsMySqlConnected)
+                    __Conn = MyConnected;
+                else
+                    __Conn = MySql.Configuration();
+                //-----------------------------------------------
+                try
+                {
+                    __Cmd.Connection = __Conn;
+                    __Cmd.CommandText = CommandText;
+                    foreach (T_Parameter p in Parameter)
+                    {
+                        __Cmd.Parameters.AddWithValue(p.ParameterName, p.Value);
+                    }
+                    __Conn.Open();
+                    ReturnValue = Convert.ToInt32(__Cmd.ExecuteScalar().ToString());
+                    __Conn.Close();
+                }
+                catch (Exception er)
+                {
+                    ExMessege = er;
+                    Messege = er.Message;
+                }
+            }
+            else
+            {
+                SqlConnection Conn = new SqlConnection();
+                SqlCommand newCmd = new SqlCommand();
+                //-----------------------------------------------
+                // set the sql connection fix configratioin or set configaration
+                //------------------------------------------------
+                if (IsConnected)
+                    Conn = Conected;
+                else
+                    Conn = Sql.Configuration();
+
+                try
+                {
+                    newCmd.Connection = Conn;
+                    newCmd.CommandText = CommandText;
+                    foreach (T_Parameter p in Parameter)
+                    {
+                        newCmd.Parameters.AddWithValue(p.ParameterName, p.Value);
+                    }
+                    Conn.Open();
+                    ReturnValue = Convert.ToInt32(newCmd.ExecuteScalar().ToString());
+                    Conn.Close();
+                }
+                catch (Exception er)
+                {
+                    ExMessege = er;
+                    Messege = er.Message;
+                }
+            }
+
+            return ReturnValue;
+        }
         private string string_Check_PV(string CommandText)
         {
             string ReturnValue=string.Empty;
@@ -172,6 +242,78 @@ namespace ECMS
         public string stringCheck(string CommandText)
         {
             return string_Check_PV(CommandText);
+        }
+        public string stringCheck(string CommandText,T_Parameter[] Parameter)
+        {
+            string ReturnValue = string.Empty;
+            // the return value is fixed;
+            //-----------------------------------------------------
+            if (_MySqlEnable)
+            {
+                MySqlConnection __Conn = new MySqlConnection();
+                MySqlCommand __Cmd = new MySqlCommand();
+                //-----------------------------------------------
+                // set the mysql connection fix configratioin or set configaration
+                //------------------------------------------------
+                if (IsMySqlConnected)
+                    __Conn = MyConnected;
+                else
+                    __Conn = MySql.Configuration();
+                //-----------------------------------------------
+                try
+                {
+                    __Cmd.Connection = __Conn;
+                    __Cmd.CommandText = CommandText;
+                    foreach (T_Parameter p in Parameter)
+                    {
+                        __Cmd.Parameters.AddWithValue(p.ParameterName, p.Value);
+                    }
+                    __Conn.Open();
+                    ReturnValue = __Cmd.ExecuteScalar().ToString();
+                    __Conn.Close();
+                    Messege = "Success";
+                }
+                catch (Exception er)
+                {
+                    ReturnValue = er.Message;
+                    ExMessege = er;
+                    Messege = er.Message;
+                }
+            }
+            else
+            {
+                SqlConnection Conn = new SqlConnection();
+                SqlCommand newCmd = new SqlCommand();
+                //-----------------------------------------------
+                // set the sql connection fix configratioin or set configaration
+                //------------------------------------------------
+                if (IsConnected)
+                    Conn = Conected;
+                else
+                    Conn = Sql.Configuration();
+
+                try
+                {
+                    newCmd.Connection = Conn;
+                    newCmd.CommandText = CommandText;
+                    foreach (T_Parameter p in Parameter)
+                    {
+                        newCmd.Parameters.AddWithValue(p.ParameterName, p.Value);
+                    }
+                    Conn.Open();
+                    ReturnValue = newCmd.ExecuteScalar().ToString();
+                    Conn.Close();
+                    Messege = "Success";
+                }
+                catch (Exception er)
+                {
+                    ReturnValue = er.Message;
+                    ExMessege = er;
+                    Messege = er.Message;
+                }
+            }
+            return ReturnValue;
+
         }
         private bool _bool_Check(string CommandText)
         {
@@ -280,6 +422,7 @@ namespace ECMS
                 {
                     ExMessege = er;
                     Messege = er.Message;
+                    ServerMessage = er.ToString();
                     ReturnValue = false;
                 }
             }
@@ -310,6 +453,7 @@ namespace ECMS
                 {
                     ExMessege = er;
                     Messege = er.Message;
+                    ServerMessage = er.ToString();
                     ReturnValue = false;
                 }
             }
@@ -344,6 +488,7 @@ namespace ECMS
             {
                 ExMessege = er;
                 Messege = er.Message;
+                ServerMessage = er.ToString();
                 return false;
             }
         }
@@ -376,10 +521,88 @@ namespace ECMS
             {
                 ExMessege = er;
                 Messege = er.Message;
+                ServerMessage = er.ToString();
                 return false;
             }
         }
+        public bool ExcutionNonQuery(string CommandText,T_Parameter[] Parameter)
+        {
+            bool ReturnValue;
+            // the return value is fixed;
+            //-----------------------------------------------------
+            if (_MySqlEnable)
+            {
+                MySqlConnection __Conn = new MySqlConnection();
+                MySqlCommand __Cmd = new MySqlCommand();
 
+                //-----------------------------------------------
+                // set the mysql connection fix configratioin or set configaration
+                //------------------------------------------------
+                if (IsMySqlConnected)
+                    __Conn = MyConnected;
+                else
+                    __Conn = MySql.Configuration();
+                //-----------------------------------------------
+                try
+                {
+                    __Cmd.Connection = __Conn;
+                    __Cmd.CommandText = CommandText;
+                    foreach(T_Parameter p in Parameter)
+                    {
+                        __Cmd.Parameters.AddWithValue(p.ParameterName,p.Value);
+                    }
+                    __Conn.Open();
+                    __Cmd.ExecuteNonQuery().ToString();
+                    __Conn.Close();
+                    Messege = "Success";
+                    ReturnValue = true;
+                }
+                catch (Exception er)
+                {
+                    ExMessege = er;
+                    Messege = er.Message;
+                    ServerMessage = er.ToString();
+                    ReturnValue = false;
+                }
+            }
+            else
+            {
+                SqlConnection Conn = new SqlConnection();
+                SqlCommand newCmd = new SqlCommand();
+
+                //-----------------------------------------------
+                // set the sql connection fix configratioin or set configaration
+                //------------------------------------------------
+                if (IsConnected)
+                    Conn = Conected;
+                else
+                    Conn = Sql.Configuration();
+
+                try
+                {
+                    newCmd.Connection = Conn;
+                    newCmd.CommandText = CommandText;
+                    foreach (T_Parameter p in Parameter)
+                    {
+                        newCmd.Parameters.AddWithValue(p.ParameterName, p.Value);
+                    }
+                    Conn.Open();
+                    newCmd.ExecuteNonQuery().ToString();
+                    Conn.Close();
+                    Messege = "Success";
+                    ReturnValue = true;
+                }
+                catch (Exception er)
+                {
+                    ExMessege = er;
+                    Messege = er.Message;
+                    ServerMessage = er.ToString();
+                    ReturnValue = false;
+                }
+            }
+            return ReturnValue;
+
+        }
 
 
         public bool ExcutionNonQuery(string CommandText, SqlParameter[] Parameter)
@@ -469,6 +692,7 @@ namespace ECMS
 
             try
             {
+                Conn.Close();
                 Conn.Open();
                 SqlDataAdapter _SqlAdaper = new System.Data.SqlClient.SqlDataAdapter(CommandText, Conn);
                 //_SqlAdaper.SelectCommand = new SqlCommand(CommandText,Conn);

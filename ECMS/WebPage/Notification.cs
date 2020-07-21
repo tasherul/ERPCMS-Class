@@ -247,6 +247,8 @@ namespace ECMS.WebPage
         /// <returns></returns>
         public string timeago(string PastDateTime)
         { return _timeago(PastDateTime); }
+
+
         /// <summary>
         /// This is a Adding a notification in class puclic variable value will need this value.
         /// </summary>

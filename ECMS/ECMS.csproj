@@ -53,6 +53,7 @@
     <Compile Include="DateTimeZone.cs" />
     <Compile Include="Decrypt.cs" />
     <Compile Include="Design\Design.cs" />
+    <Compile Include="Design\Template.cs" />
     <Compile Include="EMAIL.cs" />
     <Compile Include="Encrypt.cs" />
     <Compile Include="IPFinder.cs" />

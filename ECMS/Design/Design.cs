@@ -100,6 +100,10 @@ namespace ECMS.Design
         {
             return __Check.int32Check("select count(*) from System_Template where Template_Id=" + TemplateID) == 1 ? true : false;
         }
+        public bool AvaiableTemplate(string TemplateID, string RegID)
+        {
+            return __Check.int32Check("select count(*) from System_Template where Template_Id=" + TemplateID + " and RegID="+RegID) == 1 ? true : false;
+        }
         public bool AppsPermision(string RegID)
         {
             int Apps_Develops = __Check.int32Check("select count(*) from System_Apps where RegID="+RegID);

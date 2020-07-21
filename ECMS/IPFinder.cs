@@ -34,18 +34,27 @@ namespace ECMS
         public string IP;
         private string getIP()
         {
-            
-            string Address = "";
-            WebRequest request = WebRequest.Create("http://checkip.dyndns.org/");
-            using (WebResponse response = request.GetResponse())
-            using (StreamReader stram = new StreamReader(response.GetResponseStream()))
+            try
             {
-                Address = stram.ReadToEnd();
+                string Address = "";
+                WebRequest request = WebRequest.Create("http://checkip.dyndns.org/");
+                using (WebResponse response = request.GetResponse())
+                using (StreamReader stram = new StreamReader(response.GetResponseStream()))
+                {
+                    Address = stram.ReadToEnd();
+                }
+                int first = Address.IndexOf("Address: ") + 9;
+                int last = Address.IndexOf("</body>");
+                Address = Address.Substring(first, last - first);
+                return Address;
             }
-            int first = Address.IndexOf("Address: ") + 9;
-            int last = Address.IndexOf("</body>");
-            Address = Address.Substring(first, last - first);
-            return Address;
+            catch(Exception er)
+            {
+                return "Error: 101 (Web Response) Messege:"+er.Message;
+            }
+
+
+            
         }
         private string IPRequestHelper(string url)
         {
