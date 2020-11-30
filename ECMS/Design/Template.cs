@@ -358,7 +358,7 @@ namespace ECMS.Design
                 return dt;
             }
         }
-
+       
         public double Storage()
         {
             Check __Check = new Check();
@@ -388,6 +388,11 @@ namespace ECMS.Design
 
             return (TemplateImageSize + ApplicationImageSize + ProfileImageSize + FileSize);
         }
+        public int Alltemplate(string RegID)
+        {
+            Check __Check = new Check();
+            return __Check.int32Check("select count(*) from System_Template where RegID="+ RegID);
+        }
         public bool AvaiableStorage()
         {
             Check __Check = new Check();
@@ -395,6 +400,17 @@ namespace ECMS.Design
             double YourStorage = Storage();
             double MaxStorage = Convert.ToDouble(__Check.stringCheck("select MaxStorage from DeveloperRegistation where Reg_ID=" + RegID));
             return YourStorage < MaxStorage ? true : false;
+        }
+        public double YourStorage(string RegID)
+        {
+            double YourStorage = Storage(RegID);
+            return YourStorage;
+        }
+        public double MaxStorage(string RegID)
+        {
+            Check __Check = new Check();
+            double MaxStorage = Convert.ToDouble(__Check.stringCheck("select MaxStorage from DeveloperRegistation where Reg_ID=" + RegID));
+            return MaxStorage;
         }
         public bool AvaiableStorage(string RegID)
         {
@@ -656,12 +672,14 @@ values(@RegID,@Template_Id,@FileName,@FileSize,@Path,@DateTime,@FullPath) ", Tp)
                 string HeaderSearch_HtmlCode = Details.HeaderSearch_HtmlCode != string.Empty || Details.HeaderSearch_HtmlCode != "" ? ",HeaderSearch_HtmlCode='" + Details.HeaderSearch_HtmlCode + "'" : "";
                 string HeaderSearch_UpdateTime = Details.HeaderSearch_UpdateTime != string.Empty || Details.HeaderSearch_UpdateTime != "" ? ",HeaderSearch_UpdateTime='" + Details.HeaderSearch_UpdateTime + "'" : "";
                 string HeaderNotification_HtmlCode = Details.HeaderNotification_HtmlCode != string.Empty || Details.HeaderNotification_HtmlCode != "" ? ",HeaderNotification_HtmlCode='" + Details.HeaderNotification_HtmlCode + "'" : "";
+                string HeaderNotification_HtmlCode2 = Details.HeaderNotification_HtmlCode2 != string.Empty || Details.HeaderNotification_HtmlCode2 != "" ? ",HeaderNotification_HtmlCode2='" + Details.HeaderNotification_HtmlCode2 + "'" : "";
                 string HeaderNotification_DD_Link = Details.HeaderNotification_DD_Link != string.Empty || Details.HeaderNotification_DD_Link != "" ? ",HeaderNotification_DD_Link='" + Details.HeaderNotification_DD_Link + "'" : "";
                 string HeaderNotification_DD_Icon = Details.HeaderNotification_DD_Icon != string.Empty || Details.HeaderNotification_DD_Icon != "" ? ",HeaderNotification_DD_Icon='" + Details.HeaderNotification_DD_Icon + "'" : "";
                 string HeaderNotification_DD_Title = Details.HeaderNotification_DD_Title != string.Empty || Details.HeaderNotification_DD_Title != "" ? ",HeaderNotification_DD_Title='" + Details.HeaderNotification_DD_Title + "'" : "";
                 string HeaderNotification_DD_DetailsOrTime = Details.HeaderNotification_DD_DetailsOrTime != string.Empty || Details.HeaderNotification_DD_DetailsOrTime != "" ? ",HeaderNotification_DD_DetailsOrTime='" + Details.HeaderNotification_DD_DetailsOrTime + "'" : "";
                 string HeaderNotification_UpdateTime = Details.HeaderNotification_UpdateTime != string.Empty || Details.HeaderNotification_UpdateTime != "" ? ",HeaderNotification_UpdateTime='" + Details.HeaderNotification_UpdateTime + "'" : "";
                 string HeaderMessage_HtmlCode = Details.HeaderMessage_HtmlCode != string.Empty || Details.HeaderMessage_HtmlCode != "" ? ",HeaderMessage_HtmlCode='" + Details.HeaderMessage_HtmlCode + "'" : "";
+                string HeaderMessage_HtmlCode2 = Details.HeaderMessage_HtmlCode2 != string.Empty || Details.HeaderMessage_HtmlCode2 != "" ? ",HeaderMessage_HtmlCode2='" + Details.HeaderMessage_HtmlCode2 + "'" : "";
                 string HeaderMessage_DD_Link = Details.HeaderMessage_DD_Link != string.Empty || Details.HeaderMessage_DD_Link != "" ? ",HeaderMessage_DD_Link='" + Details.HeaderMessage_DD_Link + "'" : "";
                 string HeaderMessage_DD_ImageLink = Details.HeaderMessage_DD_ImageLink != string.Empty || Details.HeaderMessage_DD_ImageLink != "" ? ",HeaderMessage_DD_ImageLink='" + Details.HeaderMessage_DD_ImageLink + "'" : "";
                 string HeaderMessage_DD_Title = Details.HeaderMessage_DD_Title != string.Empty || Details.HeaderMessage_DD_Title != "" ? ",HeaderMessage_DD_Title='" + Details.HeaderMessage_DD_Title + "'" : "";
@@ -696,12 +714,14 @@ values(@RegID,@Template_Id,@FileName,@FileSize,@Path,@DateTime,@FullPath) ", Tp)
                   HeaderSearch_HtmlCode +
                   HeaderSearch_UpdateTime +
                   HeaderNotification_HtmlCode +
+                  HeaderNotification_HtmlCode2 +
                   HeaderNotification_DD_Link +
                   HeaderNotification_DD_Icon +
                   HeaderNotification_DD_Title +
                   HeaderNotification_DD_DetailsOrTime +
                   HeaderNotification_UpdateTime +
                   HeaderMessage_HtmlCode +
+                  HeaderMessage_HtmlCode2 +
                   HeaderMessage_DD_Link +
                   HeaderMessage_DD_ImageLink +
                   HeaderMessage_DD_Title +
@@ -744,12 +764,14 @@ values(@RegID,@Template_Id,@FileName,@FileSize,@Path,@DateTime,@FullPath) ", Tp)
     Details.HeaderSearch_HtmlCode,
     Details.HeaderSearch_UpdateTime,
     Details.HeaderNotification_HtmlCode,
+    Details.HeaderNotification_HtmlCode2,
     Details.HeaderNotification_DD_Link,
     Details.HeaderNotification_DD_Icon,
     Details.HeaderNotification_DD_Title,
     Details.HeaderNotification_DD_DetailsOrTime,
     Details.HeaderNotification_UpdateTime,
     Details.HeaderMessage_HtmlCode,
+    Details.HeaderMessage_HtmlCode2,
     Details.HeaderMessage_DD_Link,
     Details.HeaderMessage_DD_ImageLink,
     Details.HeaderMessage_DD_Title,
@@ -794,12 +816,14 @@ values(@RegID,@Template_Id,@FileName,@FileSize,@Path,@DateTime,@FullPath) ", Tp)
                     Details.HeaderSearch_HtmlCode = dr["HeaderSearch_HtmlCode"].ToString();
                     Details.HeaderSearch_UpdateTime = dr["HeaderSearch_UpdateTime"].ToString();
                     Details.HeaderNotification_HtmlCode = dr["HeaderNotification_HtmlCode"].ToString();
+                    Details.HeaderNotification_HtmlCode2 = dr["HeaderNotification_HtmlCode2"].ToString();
                     Details.HeaderNotification_DD_Link = dr["HeaderNotification_DD_Link"].ToString();
                     Details.HeaderNotification_DD_Icon = dr["HeaderNotification_DD_Icon"].ToString();
                     Details.HeaderNotification_DD_Title = dr["HeaderNotification_DD_Title"].ToString();
                     Details.HeaderNotification_DD_DetailsOrTime = dr["HeaderNotification_DD_DetailsOrTime"].ToString();
                     Details.HeaderNotification_UpdateTime = dr["HeaderNotification_UpdateTime"].ToString();
                     Details.HeaderMessage_HtmlCode = dr["HeaderMessage_HtmlCode"].ToString();
+                    Details.HeaderMessage_HtmlCode2 = dr["HeaderMessage_HtmlCode2"].ToString();
                     Details.HeaderMessage_DD_Link = dr["HeaderMessage_DD_Link"].ToString();
                     Details.HeaderMessage_DD_ImageLink = dr["HeaderMessage_DD_ImageLink"].ToString();
                     Details.HeaderMessage_DD_Title = dr["HeaderMessage_DD_Title"].ToString();
@@ -837,12 +861,14 @@ values(@RegID,@Template_Id,@FileName,@FileSize,@Path,@DateTime,@FullPath) ", Tp)
                 Details.HeaderSearch_HtmlCode = "";
                 Details.HeaderSearch_UpdateTime = "";
                 Details.HeaderNotification_HtmlCode = "";
+                Details.HeaderNotification_HtmlCode2 = "";
                 Details.HeaderNotification_DD_Link = "";
                 Details.HeaderNotification_DD_Icon = "";
                 Details.HeaderNotification_DD_Title = "";
                 Details.HeaderNotification_DD_DetailsOrTime = "";
                 Details.HeaderNotification_UpdateTime = "";
                 Details.HeaderMessage_HtmlCode = "";
+                Details.HeaderMessage_HtmlCode2 = "";
                 Details.HeaderMessage_DD_Link = "";
                 Details.HeaderMessage_DD_ImageLink = "";
                 Details.HeaderMessage_DD_Title = "";
@@ -1618,12 +1644,14 @@ values(@RegID,@Template_Id,@FileName,@FileSize,@Path,@DateTime,@FullPath) ", Tp)
       public string HeaderSearch_HtmlCode{get;set;}
       public string HeaderSearch_UpdateTime {get;set;}
       public string HeaderNotification_HtmlCode{get;set;}
+      public string HeaderNotification_HtmlCode2 { get; set; }
       public string HeaderNotification_DD_Link{get;set;}
       public string HeaderNotification_DD_Icon{get;set;}
       public string HeaderNotification_DD_Title{get;set;}
       public string HeaderNotification_DD_DetailsOrTime{get;set;}
       public string HeaderNotification_UpdateTime {get;set;}
       public string HeaderMessage_HtmlCode{get;set;}
+      public string HeaderMessage_HtmlCode2 { get; set; }
       public string HeaderMessage_DD_Link{get;set;}
       public string HeaderMessage_DD_ImageLink{get;set;}
       public string HeaderMessage_DD_Title{get;set;}

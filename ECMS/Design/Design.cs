@@ -152,6 +152,7 @@ namespace ECMS.Design
 
             return Details;
         }
+
         public DesignDetails GetSingleTempletData(string TemplateID)
         {
             DesignDetails design = new DesignDetails();
